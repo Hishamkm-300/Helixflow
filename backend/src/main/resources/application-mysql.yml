@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: ${DB_JDBC_URL:jdbc:mysql://localhost:3306/helixflow?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:helixflow_user}
+    password: ${DB_PASSWORD:helixflow_password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update

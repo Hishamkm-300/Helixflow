@@ -1,0 +1,663 @@
+/* PatientCareSummaryModal.css */
+
+.patient-summary-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 15, 29, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.patient-summary-modal-container {
+  background: var(--bg-surface-elevated, #1e293b);
+  border: 1px solid var(--border-medium, rgba(148, 163, 184, 0.2));
+  border-radius: var(--radius-lg, 12px);
+  width: 100%;
+  max-width: 56rem; /* max-w-4xl = 896px */
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  margin: auto;
+}
+
+.patient-summary-modal-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: rgba(15, 23, 42, 0.7);
+  border-bottom: 1px solid var(--border-subtle, rgba(148, 163, 184, 0.1));
+}
+
+.topbar-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.topbar-title-group h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.badge-ai-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-print {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-print:hover:not(:disabled) {
+  background: #0369a1;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+}
+
+.btn-modal-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0.35rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.btn-modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+}
+
+.patient-summary-modal-scroll {
+  flex: 1;
+  padding: 1.25rem 1.5rem;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden; /* The white document sheet handles internal scrolling */
+}
+
+.summary-loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 500px;
+  gap: 1rem;
+  color: #94a3b8;
+}
+
+.summary-loading-state h3 {
+  color: #f8fafc;
+  margin: 0;
+}
+
+/* ==============================================================
+   Printable High-Contrast Clean White Patient Care Sheet
+   ============================================================== */
+.patient-care-sheet {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 2rem !important; /* p-8 */
+  border-radius: 0.75rem !important; /* rounded-xl */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important; /* shadow-2xl */
+  overflow-y: auto !important; /* overflow-y-auto */
+  max-height: 80vh !important; /* max-h-[80vh] */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+/* Ensure document typography overrides global dark mode rules */
+.patient-care-sheet h1,
+.patient-care-sheet h2,
+.patient-care-sheet h3,
+.patient-care-sheet h4,
+.patient-care-sheet strong {
+  color: #0f172a !important;
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px solid #0284c7;
+  margin-bottom: 1.25rem;
+}
+
+.sheet-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.hospital-cross-icon {
+  width: 44px;
+  height: 44px;
+  background: #e0f2fe;
+  color: #0284c7;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hospital-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.hospital-dept {
+  font-size: 0.82rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.sheet-doc-badge {
+  text-align: right;
+}
+
+.doc-type-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #0284c7;
+}
+
+.doc-type-sub {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Metadata Grid */
+.patient-meta-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.85rem 1.15rem;
+  margin-bottom: 1.5rem;
+}
+
+.meta-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.meta-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.meta-val {
+  font-size: 0.88rem;
+  color: #0f172a;
+}
+
+/* Sections */
+.sheet-section {
+  margin-bottom: 1.4rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.section-heading h3 {
+  font-size: 1rem !important; /* text-base */
+  font-weight: 700 !important; /* font-bold */
+  color: #0f172a !important; /* text-slate-900 */
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.heading-icon {
+  flex-shrink: 0;
+}
+
+.text-blue { color: #0284c7; }
+.text-indigo { color: #4f46e5; }
+.text-emerald { color: #059669; }
+.text-red { color: #dc2626; }
+.text-purple { color: #7c3aed; }
+
+/* Diagnosis Box */
+.diagnosis-box {
+  background: #f0f9ff;
+  border-left: 4px solid #0284c7;
+  padding: 0.85rem 1.1rem;
+  border-radius: 0 6px 6px 0;
+}
+
+.diagnosis-text {
+  font-size: 0.94rem;
+  color: #0369a1;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* Medications Table */
+.medications-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.medications-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.medications-table th {
+  background: #f1f5f9;
+  color: #334155;
+  font-weight: 700;
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid #cbd5e1;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.medications-table td {
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #1e293b;
+  vertical-align: top;
+}
+
+.medications-table tr:last-child td {
+  border-bottom: none;
+}
+
+.med-dose-tag {
+  font-size: 0.75rem;
+  color: #0284c7;
+  font-weight: 600;
+  margin-top: 0.15rem;
+}
+
+.med-freq-tag {
+  display: inline-block;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.med-instructions-cell {
+  line-height: 1.45;
+  color: #334155;
+}
+
+/* Home Care Checklist */
+.checklist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  background: #ffffff;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.875rem !important; /* text-sm */
+  font-weight: 500 !important; /* font-medium */
+  color: #334155 !important; /* text-slate-700 */
+  line-height: 1.625 !important; /* leading-relaxed */
+}
+
+.check-icon {
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+  color: #059669 !important; /* text-emerald-600 */
+}
+
+.checklist-text {
+  flex: 1;
+  color: #334155 !important; /* text-slate-700 */
+  font-size: 0.875rem !important; /* text-sm */
+  font-weight: 500 !important; /* font-medium */
+  line-height: 1.625 !important; /* leading-relaxed */
+}
+
+/* Red Flag Section */
+.red-flag-box {
+  background: #fef2f2;
+  border: 1.5px solid #f87171;
+  border-radius: 6px;
+  padding: 0.85rem 1.15rem;
+}
+
+.red-flag-intro {
+  color: #991b1b;
+  font-size: 0.84rem;
+  margin-bottom: 0.45rem;
+}
+
+.red-flag-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #991b1b;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.red-flag-item {
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* Follow Up */
+.follow-up-box {
+  background-color: #faf5ff !important; /* bg-purple-50 */
+  border: 1px solid #e9d5ff !important; /* border-purple-200 */
+  border-radius: 0.5rem !important; /* rounded-lg */
+  padding: 1rem 1.25rem !important; /* p-4 */
+  color: #581c87 !important; /* text-purple-900 */
+}
+
+.follow-up-text {
+  margin: 0 !important;
+  font-size: 0.875rem !important; /* text-sm */
+  color: #1e293b !important; /* text-slate-800 */
+  font-weight: 500 !important; /* font-medium */
+  line-height: 1.625 !important; /* leading-relaxed */
+}
+
+/* Signature Box */
+.signature-footer-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 0.85rem 1.15rem;
+  margin-top: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.sig-wrapper-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.sig-heading-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: #0284c7;
+  margin-bottom: 0.35rem;
+}
+
+.sub-heading-care {
+  font-size: 1rem !important; /* text-base */
+  font-weight: 700 !important; /* font-bold */
+  color: #0f172a !important; /* text-slate-900 */
+  letter-spacing: 0.02em;
+  margin-bottom: 0.55rem;
+  text-transform: uppercase;
+}
+
+.sig-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sig-icon-wrap {
+  width: 40px;
+  height: 40px;
+  background: #dcfce7;
+  color: #16a34a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sig-primary {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.sig-sub {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.1rem;
+}
+
+.sig-seal {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #15803d;
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  padding: 0.35rem 0.65rem;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.sheet-doc-footer {
+  text-align: center;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 0.75rem;
+}
+
+.sheet-doc-footer p {
+  margin: 0;
+}
+
+.empty-sub-box {
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 6px;
+  padding: 1rem;
+  color: #64748b;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.patient-summary-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 0.85rem 1.5rem;
+  background: rgba(15, 23, 42, 0.7);
+  border-top: 1px solid var(--border-subtle, rgba(148, 163, 184, 0.1));
+}
+
+/* ==============================================================
+   High-Contrast Utility Classes for Clinical Document Receipt
+   ============================================================== */
+.bg-white { background-color: #ffffff !important; }
+.text-slate-900 { color: #0f172a !important; }
+.text-slate-800 { color: #1e293b !important; }
+.text-slate-700 { color: #334155 !important; }
+.text-slate-600 { color: #475569 !important; }
+.text-slate-500 { color: #64748b !important; }
+.text-emerald-600 { color: #059669 !important; }
+.text-purple-900 { color: #581c87 !important; }
+.text-red-900 { color: #7f1d1d !important; }
+.bg-purple-50 { background-color: #faf5ff !important; }
+.border-purple-200 { border-color: #e9d5ff !important; }
+.font-bold { font-weight: 700 !important; }
+.font-semibold { font-weight: 600 !important; }
+.font-medium { font-weight: 500 !important; }
+.text-base { font-size: 1rem !important; line-height: 1.5 !important; }
+.text-sm { font-size: 0.875rem !important; }
+.text-xs { font-size: 0.75rem !important; }
+.leading-relaxed { line-height: 1.625 !important; }
+.rounded-xl { border-radius: 0.75rem !important; }
+.rounded-lg { border-radius: 0.5rem !important; }
+.p-8 { padding: 2rem !important; }
+.p-4 { padding: 1rem !important; }
+.shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important; }
+.overflow-y-auto { overflow-y: auto !important; }
+.max-h-\[80vh\] { max-height: 80vh !important; }
+.max-w-4xl { max-width: 56rem !important; }
+.w-full { width: 100% !important; }
+.shrink-0 { flex-shrink: 0 !important; }
+
+/* ==============================================================
+   Print Stylesheet (@media print)
+   Hides all UI, modals, buttons, backgrounds, and prints only
+   the clean white patient discharge sheet
+   ============================================================== */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .patient-summary-modal-backdrop {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+
+  .patient-summary-modal-container {
+    border: none !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: transparent !important;
+  }
+
+  .patient-summary-modal-scroll {
+    overflow: visible !important;
+    padding: 0 !important;
+    background: transparent !important;
+    display: block !important;
+  }
+
+  .patient-care-sheet,
+  .patient-care-sheet * {
+    visibility: visible;
+  }
+
+  .patient-care-sheet {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0.5in !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .diagnosis-box {
+    background: #f8fafc !important;
+    border-left: 4px solid #000000 !important;
+    color: #000000 !important;
+  }
+
+  .diagnosis-text {
+    color: #000000 !important;
+  }
+
+  .red-flag-box {
+    background: #ffffff !important;
+    border: 2px solid #000000 !important;
+  }
+
+  .red-flag-intro,
+  .red-flag-list {
+    color: #000000 !important;
+  }
+
+  .medications-table th {
+    background: #e2e8f0 !important;
+    color: #000000 !important;
+  }
+}
